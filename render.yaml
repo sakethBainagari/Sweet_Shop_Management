@@ -1,0 +1,30 @@
+services:
+  # Backend API Service
+  - type: web
+    name: sweet-shop-backend
+    runtime: node
+    buildCommand: cd backend && npm install && npm run build && npx prisma generate
+    startCommand: cd backend && npm start
+    plan: free
+    region: oregon
+    branch: main
+    rootDir: .
+    env: node
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DATABASE_URL
+        sync: false  # You'll set this manually in Render dashboard
+      - key: JWT_SECRET
+        sync: false  # You'll set this manually in Render dashboard
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: FRONTEND_URL
+        sync: false  # You'll set this after Vercel deployment
+    healthCheckPath: /api/health
+    disk:
+      name: sweet-shop-data
+      mountPath: /opt/render/project/src
+      sizeGB: 1
