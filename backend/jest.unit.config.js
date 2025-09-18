@@ -3,8 +3,7 @@ module.exports = {
   testEnvironment: 'node',
   roots: ['<rootDir>/src'],
   testMatch: [
-    '**/__tests__/**/*.+(ts|tsx|js)',
-    '**/*.(test|spec).(ts|tsx|js)'
+    '**/unit/**/*.test.ts'
   ],
   transform: {
     '^.+\\.(ts|tsx)$': 'ts-jest',
@@ -30,11 +29,7 @@ module.exports = {
       statements: 85
     }
   },
-  setupFilesAfterEnv: ['<rootDir>/src/tests/setup.ts'],
-  moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1',
-  },
-  testTimeout: 30000,
+  testTimeout: 10000,
   clearMocks: true,
   restoreMocks: true,
   // Fix for Jest not exiting properly

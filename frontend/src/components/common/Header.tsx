@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 const Header: React.FC = () => {
   const { user, isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleLogout = () => {
@@ -17,65 +18,100 @@ const Header: React.FC = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  const isActivePath = (path: string) => {
+    return location.pathname === path;
+  };
+
   return (
-    <header className="bg-white shadow-lg">
+    <header className="bg-white/95 backdrop-blur-md shadow-soft border-b border-neutral-100 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
-          <Link to="/" className="flex items-center">
-            <div className="text-2xl font-bold text-blue-600">
-              🍭 Sweet Shop
+          <Link to="/" className="flex items-center group">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
+                <span className="text-2xl">🍭</span>
+              </div>
+              <div className="flex flex-col">
+                <span className="text-xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
+                  Sweet Shop
+                </span>
+                <span className="text-xs text-neutral-500 font-medium">Management</span>
+              </div>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-6">
+          <nav className="hidden md:flex items-center space-x-2">
             {isAuthenticated ? (
               <>
                 <Link 
                   to="/dashboard" 
-                  className="text-gray-700 hover:text-blue-600 transition-colors"
+                  className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                    isActivePath('/dashboard')
+                      ? 'bg-primary-100 text-primary-700'
+                      : 'text-neutral-600 hover:text-primary-600 hover:bg-neutral-50'
+                  }`}
                 >
                   Dashboard
                 </Link>
                 {user?.role === 'ADMIN' && (
                   <Link 
                     to="/admin" 
-                    className="text-gray-700 hover:text-blue-600 transition-colors"
+                    className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                      isActivePath('/admin')
+                        ? 'bg-secondary-100 text-secondary-700'
+                        : 'text-neutral-600 hover:text-secondary-600 hover:bg-neutral-50'
+                    }`}
                   >
                     Admin Panel
                   </Link>
                 )}
-                <div className="flex items-center space-x-4">
-                  <span className="text-gray-600">
-                    Welcome, {user?.name}
-                    {user?.role === 'ADMIN' && (
-                      <span className="ml-1 text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
-                        Admin
+                
+                {/* User Menu */}
+                <div className="flex items-center space-x-4 ml-6 pl-6 border-l border-neutral-200">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center">
+                      <span className="text-white text-sm font-semibold">
+                        {user?.name?.charAt(0).toUpperCase()}
                       </span>
-                    )}
-                  </span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-sm font-medium text-neutral-900">
+                        {user?.name}
+                      </span>
+                      {user?.role === 'ADMIN' && (
+                        <span className="text-xs bg-secondary-100 text-secondary-700 px-2 py-0.5 rounded-full">
+                          Admin
+                        </span>
+                      )}
+                    </div>
+                  </div>
                   <button
                     onClick={handleLogout}
-                    className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors"
+                    className="bg-error-600 hover:bg-error-700 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 shadow-soft hover:shadow-medium focus:ring-2 focus:ring-error-500 focus:ring-offset-2"
                   >
                     Logout
                   </button>
                 </div>
               </>
             ) : (
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-3">
                 <Link 
                   to="/login" 
-                  className="text-gray-700 hover:text-blue-600 transition-colors"
+                  className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                    isActivePath('/login')
+                      ? 'bg-primary-100 text-primary-700'
+                      : 'text-neutral-600 hover:text-primary-600 hover:bg-neutral-50'
+                  }`}
                 >
-                  Login
+                  Sign In
                 </Link>
                 <Link 
                   to="/register" 
-                  className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+                  className="btn-primary"
                 >
-                  Register
+                  Get Started
                 </Link>
               </div>
             )}
@@ -85,7 +121,7 @@ const Header: React.FC = () => {
           <div className="md:hidden">
             <button
               onClick={toggleMobileMenu}
-              className="text-gray-700 hover:text-blue-600 focus:outline-none focus:text-blue-600"
+              className="p-2 text-neutral-600 hover:text-primary-600 hover:bg-neutral-50 rounded-lg transition-all duration-200 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
             >
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 {isMobileMenuOpen ? (
@@ -100,13 +136,17 @@ const Header: React.FC = () => {
 
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
-          <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-gray-200">
+          <div className="md:hidden border-t border-neutral-100 py-4 animate-fade-in-up">
+            <div className="space-y-2">
               {isAuthenticated ? (
                 <>
                   <Link 
                     to="/dashboard" 
-                    className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors"
+                    className={`block px-4 py-3 rounded-lg font-medium transition-all duration-200 ${
+                      isActivePath('/dashboard')
+                        ? 'bg-primary-100 text-primary-700'
+                        : 'text-neutral-600 hover:text-primary-600 hover:bg-neutral-50'
+                    }`}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     Dashboard
@@ -114,26 +154,40 @@ const Header: React.FC = () => {
                   {user?.role === 'ADMIN' && (
                     <Link 
                       to="/admin" 
-                      className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors"
+                      className={`block px-4 py-3 rounded-lg font-medium transition-all duration-200 ${
+                        isActivePath('/admin')
+                          ? 'bg-secondary-100 text-secondary-700'
+                          : 'text-neutral-600 hover:text-secondary-600 hover:bg-neutral-50'
+                      }`}
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       Admin Panel
                     </Link>
                   )}
-                  <div className="px-3 py-2">
-                    <div className="text-gray-600 text-sm">
-                      Logged in as {user?.name}
-                      {user?.role === 'ADMIN' && (
-                        <span className="ml-1 text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
-                          Admin
+                  
+                  {/* Mobile User Info */}
+                  <div className="px-4 py-3 border-t border-neutral-100 mt-4">
+                    <div className="flex items-center space-x-3 mb-4">
+                      <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center">
+                        <span className="text-white font-semibold">
+                          {user?.name?.charAt(0).toUpperCase()}
                         </span>
-                      )}
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="font-medium text-neutral-900">{user?.name}</span>
+                        <span className="text-sm text-neutral-500">{user?.email}</span>
+                        {user?.role === 'ADMIN' && (
+                          <span className="text-xs bg-secondary-100 text-secondary-700 px-2 py-1 rounded-full mt-1 w-fit">
+                            Administrator
+                          </span>
+                        )}
+                      </div>
                     </div>
                     <button
                       onClick={handleLogout}
-                      className="mt-2 bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors w-full text-center"
+                      className="w-full bg-error-600 hover:bg-error-700 text-white px-4 py-3 rounded-lg font-medium transition-all duration-200"
                     >
-                      Logout
+                      Sign Out
                     </button>
                   </div>
                 </>
@@ -141,17 +195,21 @@ const Header: React.FC = () => {
                 <>
                   <Link 
                     to="/login" 
-                    className="block px-3 py-2 text-gray-700 hover:text-blue-600 transition-colors"
+                    className={`block px-4 py-3 rounded-lg font-medium transition-all duration-200 ${
+                      isActivePath('/login')
+                        ? 'bg-primary-100 text-primary-700'
+                        : 'text-neutral-600 hover:text-primary-600 hover:bg-neutral-50'
+                    }`}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    Login
+                    Sign In
                   </Link>
                   <Link 
                     to="/register" 
-                    className="block px-3 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-center"
+                    className="block px-4 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-medium transition-all duration-200 text-center"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    Register
+                    Get Started
                   </Link>
                 </>
               )}

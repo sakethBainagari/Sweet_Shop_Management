@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AuthProvider } from './context/AuthContext';
 import { ToastProvider } from './context/ToastContext';
 import ProtectedRoute from './components/common/ProtectedRoute';
+import PublicRoute from './components/common/PublicRoute';
 import Header from './components/common/Header';
 import ToastContainer from './components/common/ToastContainer';
 import HomePage from './pages/HomePage';
@@ -15,17 +16,38 @@ function App() {
     <ToastProvider>
       <AuthProvider>
         <Router>
-          <div className="min-h-screen bg-gray-50">
+          <div className="min-h-screen bg-gradient-to-br from-neutral-50 to-primary-50">
             <Header />
             
             <main className="container mx-auto px-4 py-6">
               <Routes>
-                {/* Public Routes */}
-                <Route path="/" element={<HomePage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/register" element={<RegisterPage />} />
+                {/* Public Routes - redirect to dashboard if authenticated */}
+                <Route 
+                  path="/" 
+                  element={
+                    <PublicRoute>
+                      <HomePage />
+                    </PublicRoute>
+                  } 
+                />
+                <Route 
+                  path="/login" 
+                  element={
+                    <PublicRoute>
+                      <LoginPage />
+                    </PublicRoute>
+                  } 
+                />
+                <Route 
+                  path="/register" 
+                  element={
+                    <PublicRoute>
+                      <RegisterPage />
+                    </PublicRoute>
+                  } 
+                />
                 
-                {/* Protected Routes */}
+                {/* Protected Routes - require authentication */}
                 <Route 
                   path="/dashboard" 
                   element={

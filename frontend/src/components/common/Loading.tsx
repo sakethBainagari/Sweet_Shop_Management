@@ -17,9 +17,9 @@ const Loading: React.FC<LoadingProps> = ({
 
   return (
     <div className="flex flex-col items-center justify-center p-8">
-      <div className={`animate-spin rounded-full border-4 border-gray-300 border-t-blue-600 ${sizeClasses[size]}`}></div>
+      <div className={`animate-spin rounded-full border-4 border-neutral-300 border-t-primary-600 ${sizeClasses[size]}`}></div>
       {message && (
-        <p className="mt-4 text-gray-600 text-center">{message}</p>
+        <p className="mt-4 text-neutral-600 text-center font-medium">{message}</p>
       )}
     </div>
   );

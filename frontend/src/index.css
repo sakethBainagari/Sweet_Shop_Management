@@ -1,6 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Base styles with professional design */
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-feature-settings: 'cv04', 'cv03', 'cv02', 'cv01';
+  }
+
+  body {
+    @apply bg-neutral-50 text-neutral-900;
+    font-feature-settings: 'cv04', 'cv03', 'cv02', 'cv01';
+  }
+
+  /* Improved focus styles */
+  *:focus {
+    outline: none;
+  }
+
+  *:focus-visible {
+    @apply ring-2 ring-primary-500 ring-offset-2 ring-offset-white;
+  }
+}
+
+/* Professional component styles */
+@layer components {
+  /* Button variations */
+  .btn-primary {
+    @apply bg-primary-600 hover:bg-primary-700 text-white font-medium px-6 py-3 rounded-xl transition-all duration-200 shadow-soft hover:shadow-medium focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary-600 hover:bg-secondary-700 text-white font-medium px-6 py-3 rounded-xl transition-all duration-200 shadow-soft hover:shadow-medium focus:ring-2 focus:ring-secondary-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-outline {
+    @apply bg-transparent border-2 border-primary-600 text-primary-600 hover:bg-primary-600 hover:text-white font-medium px-6 py-3 rounded-xl transition-all duration-200 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-ghost {
+    @apply bg-transparent hover:bg-neutral-100 text-neutral-700 hover:text-neutral-900 font-medium px-6 py-3 rounded-xl transition-all duration-200 focus:ring-2 focus:ring-neutral-500 focus:ring-offset-2;
+  }
+
+  /* Input styles */
+  .input-field {
+    @apply w-full px-4 py-3 border border-neutral-200 rounded-xl bg-white text-neutral-900 placeholder-neutral-400 focus:border-primary-500 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-all duration-200;
+  }
+
+  .input-error {
+    @apply border-error-500 focus:border-error-500 focus:ring-error-500;
+  }
+
+  /* Card styles */
+  .card {
+    @apply bg-white rounded-2xl shadow-soft border border-neutral-100;
+  }
+
+  .card-hover {
+    @apply card hover:shadow-medium transition-all duration-200;
+  }
+
+  /* Alert styles */
+  .alert-success {
+    @apply bg-success-50 border border-success-200 text-success-800 rounded-xl p-4;
+  }
+
+  .alert-error {
+    @apply bg-error-50 border border-error-200 text-error-800 rounded-xl p-4;
+  }
+
+  .alert-warning {
+    @apply bg-warning-50 border border-warning-200 text-warning-800 rounded-xl p-4;
+  }
+
+  .alert-info {
+    @apply bg-primary-50 border border-primary-200 text-primary-800 rounded-xl p-4;
+  }
+}
 
 /* Custom Animations for Sweet Shop */
 @keyframes blob {
@@ -38,21 +116,12 @@
   }
 }
 
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes bounce-gentle {
+@keyframes pulse-soft {
   0%, 100% {
-    transform: translateY(0);
+    opacity: 1;
   }
   50% {
-    transform: translateY(-10px);
+    opacity: 0.8;
   }
 }
 
@@ -69,55 +138,21 @@
   animation: fade-in-up 0.8s ease-out forwards;
 }
 
-.animate-rotate {
-  animation: rotate 20s linear infinite;
-}
-
-.animate-bounce-gentle {
-  animation: bounce-gentle 2s infinite;
+.animate-pulse-soft {
+  animation: pulse-soft 2s infinite;
 }
 
 /* Animation Delays */
-.animation-delay-500 {
-  animation-delay: 0.5s;
-}
-
-.animation-delay-1000 {
-  animation-delay: 1s;
-}
-
-.animation-delay-1500 {
-  animation-delay: 1.5s;
-}
-
-.animation-delay-2000 {
-  animation-delay: 2s;
-}
-
-.animation-delay-2500 {
-  animation-delay: 2.5s;
-}
-
-.animation-delay-2800 {
-  animation-delay: 2.8s;
-}
-
-.animation-delay-3000 {
-  animation-delay: 3s;
-}
-
-.animation-delay-3500 {
-  animation-delay: 3.5s;
-}
-
-/* 3D Transform Styles */
-.perspective-1000 {
-  perspective: 1000px;
-}
-
-.transform-3d {
-  transform-style: preserve-3d;
-}
+.animation-delay-100 { animation-delay: 0.1s; }
+.animation-delay-200 { animation-delay: 0.2s; }
+.animation-delay-300 { animation-delay: 0.3s; }
+.animation-delay-500 { animation-delay: 0.5s; }
+.animation-delay-700 { animation-delay: 0.7s; }
+.animation-delay-1000 { animation-delay: 1s; }
+.animation-delay-1500 { animation-delay: 1.5s; }
+.animation-delay-2000 { animation-delay: 2s; }
+.animation-delay-2500 { animation-delay: 2.5s; }
+.animation-delay-3000 { animation-delay: 3s; }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
@@ -125,26 +160,18 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  @apply bg-neutral-100;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(45deg, #ec4899, #8b5cf6);
-  border-radius: 4px;
+  @apply bg-neutral-300 rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(45deg, #db2777, #7c3aed);
+  @apply bg-neutral-400;
 }
 
 /* Selection Styles */
 ::selection {
-  background: rgba(168, 85, 247, 0.3);
-  color: #1f2937;
-}
-
-/* Focus Styles */
-.focus-ring:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.5);
+  @apply bg-primary-100 text-primary-900;
 }
