@@ -1,8 +1,6 @@
 import bcrypt from 'bcryptjs';
-import { PrismaClient } from '@prisma/client';
 import { generateToken } from '../utils/jwt';
-
-const prisma = new PrismaClient();
+import { prisma } from '../index';
 
 export interface RegisterUserData {
   name: string;

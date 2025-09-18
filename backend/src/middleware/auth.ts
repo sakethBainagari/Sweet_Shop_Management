@@ -23,7 +23,7 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
     if (!token) {
       res.status(401).json({
         success: false,
-        message: 'Access token is required'
+        message: 'Authentication required'
       });
       return;
     }
