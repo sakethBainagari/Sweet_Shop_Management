@@ -2,49 +2,70 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { PrismaClient } from '@prisma/client';
+import authRoutes from './routes/auth';
 
 // Load environment variables
 dotenv.config();
 
-const app = express();
+// Initialize Prisma client
 const prisma = new PrismaClient();
-const PORT = process.env.PORT || 3001;
 
-// Middleware
-app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
-  credentials: true
-}));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// Create Express app factory function
+export const createApp = (): express.Application => {
+  const app = express();
 
-// Basic health check route
-app.get('/api/health', (_req, res) => {
-  res.json({ status: 'OK', message: 'Sweet Shop API is running' });
-});
+  // Middleware
+  app.use(cors({
+    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    credentials: true
+  }));
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
 
-// Error handling middleware
-app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
-  console.error(err.stack);
-  res.status(500).json({ error: 'Something went wrong!' });
-});
+  // Routes
+  app.use('/api/auth', authRoutes);
 
-// Graceful shutdown
-process.on('SIGTERM', async () => {
-  console.log('SIGTERM received, shutting down gracefully');
-  await prisma.$disconnect();
-  process.exit(0);
-});
+  // Basic health check route
+  app.get('/api/health', (_req, res) => {
+    res.json({ status: 'OK', message: 'Sweet Shop API is running' });
+  });
 
-process.on('SIGINT', async () => {
-  console.log('SIGINT received, shutting down gracefully');
-  await prisma.$disconnect();
-  process.exit(0);
-});
+  // Error handling middleware
+  app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
+    console.error(err.stack);
+    res.status(500).json({ error: 'Something went wrong!' });
+  });
 
-app.listen(PORT, () => {
-  console.log(`🚀 Sweet Shop API server is running on port ${PORT}`);
-  console.log(`📊 Health check available at http://localhost:${PORT}/api/health`);
-});
+  return app;
+};
 
+// Create the app instance
+const app = createApp();
+
+// Only start server if not in test environment
+if (process.env.NODE_ENV !== 'test') {
+  const PORT = process.env.PORT || 3001;
+
+  app.listen(PORT, () => {
+    console.log(`🚀 Sweet Shop API server is running on port ${PORT}`);
+    console.log(`📊 Health check available at http://localhost:${PORT}/api/health`);
+    console.log(`🔐 Authentication endpoints available at http://localhost:${PORT}/api/auth`);
+  });
+
+  // Graceful shutdown
+  process.on('SIGTERM', async () => {
+    console.log('SIGTERM received, shutting down gracefully');
+    await prisma.$disconnect();
+    process.exit(0);
+  });
+
+  process.on('SIGINT', async () => {
+    console.log('SIGINT received, shutting down gracefully');
+    await prisma.$disconnect();
+    process.exit(0);
+  });
+}
+
+// Export both the app and prisma for testing
+export { prisma };
 export default app;

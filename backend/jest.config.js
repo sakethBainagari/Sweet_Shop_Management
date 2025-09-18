@@ -21,7 +21,10 @@ module.exports = {
     'html',
   ],
   setupFilesAfterEnv: ['<rootDir>/src/tests/setup.ts'],
-  moduleNameMapping: {
+  moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
+  // Fix for Jest not exiting properly
+  forceExit: true,
+  detectOpenHandles: true,
 };
