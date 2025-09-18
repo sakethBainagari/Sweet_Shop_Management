@@ -9,7 +9,7 @@ interface SweetListProps {
   error: string | null;
   onPurchase: (id: string, data: PurchaseData) => Promise<any>;
   onEdit?: (sweet: Sweet) => void;
-  onDelete?: (id: string) => Promise<void>;
+  onDelete?: (sweet: Sweet) => Promise<void>;
   onRestock?: (sweet: Sweet) => void;
 }
 

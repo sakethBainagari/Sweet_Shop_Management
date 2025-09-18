@@ -2,8 +2,10 @@ import { useState, useEffect, useCallback } from 'react';
 import { SweetService } from '../services/sweetService';
 import { Sweet, SearchFilters, CreateSweetData, UpdateSweetData, PurchaseData, RestockData } from '../types/sweet';
 import { LoadingState } from '../types/api';
+import { useAuth } from '../context/AuthContext';
 
 export const useSweets = () => {
+  const { isAuthenticated, isLoading: authLoading } = useAuth();
   const [sweets, setSweets] = useState<Sweet[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [loadingState, setLoadingState] = useState<LoadingState>({ isLoading: false, error: null });
@@ -15,6 +17,7 @@ export const useSweets = () => {
       const data = await SweetService.getAllSweets();
       setSweets(data);
     } catch (error: any) {
+      console.error('Failed to fetch sweets:', error);
       setLoadingState({ isLoading: false, error: error.message || 'Failed to fetch sweets' });
     } finally {
       setLoadingState(prev => ({ ...prev, isLoading: false }));
@@ -85,11 +88,13 @@ export const useSweets = () => {
     return updatedSweet;
   }, []);
 
-  // Initial data fetch
+  // Initial data fetch - only when authenticated and not loading
   useEffect(() => {
-    fetchSweets();
-    fetchCategories();
-  }, [fetchSweets, fetchCategories]);
+    if (!authLoading && isAuthenticated) {
+      fetchSweets();
+      fetchCategories();
+    }
+  }, [authLoading, isAuthenticated]);
 
   return {
     sweets,

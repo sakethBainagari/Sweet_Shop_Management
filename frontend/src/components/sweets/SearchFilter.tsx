@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { SearchFilters } from '../../types/sweet';
 import { debounce } from '../../utils/helpers';
 import { UI_CONSTANTS } from '../../utils/constants';
@@ -20,14 +20,17 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
   });
 
   // Debounced search function
-  const debouncedSearch = debounce((newFilters: SearchFilters) => {
-    onFiltersChange(newFilters);
-  }, UI_CONSTANTS.DEBOUNCE_DELAY);
+  const debouncedSearch = useCallback(
+    debounce((newFilters: SearchFilters) => {
+      onFiltersChange(newFilters);
+    }, UI_CONSTANTS.DEBOUNCE_DELAY),
+    [onFiltersChange]
+  );
 
   // Effect to trigger search when filters change
   useEffect(() => {
     debouncedSearch(filters);
-  }, [filters, debouncedSearch]);
+  }, [filters]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;

@@ -8,7 +8,7 @@ interface SweetCardProps {
   sweet: Sweet;
   onPurchase: (id: string, data: PurchaseData) => Promise<any>;
   onEdit?: (sweet: Sweet) => void;
-  onDelete?: (id: string) => Promise<void>;
+  onDelete?: (sweet: Sweet) => Promise<void>;
   onRestock?: (sweet: Sweet) => void;
 }
 
@@ -34,12 +34,9 @@ const SweetCard: React.FC<SweetCardProps> = ({
   const handleDelete = async () => {
     if (!onDelete) return;
     
-    const confirmed = window.confirm(`Are you sure you want to delete "${sweet.name}"?`);
-    if (!confirmed) return;
-
     try {
       setIsDeleting(true);
-      await onDelete(sweet.id);
+      await onDelete(sweet);
     } catch (error) {
       console.error('Error deleting sweet:', error);
     } finally {

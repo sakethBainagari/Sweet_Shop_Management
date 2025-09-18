@@ -3,7 +3,10 @@ import { useSweets } from '../hooks/useSweets';
 import { useAuth } from '../context/AuthContext';
 import SearchFilter from '../components/sweets/SearchFilter';
 import SweetList from '../components/sweets/SweetList';
-import { SearchFilters, PurchaseData } from '../types/sweet';
+import EditSweetModal from '../components/admin/EditSweetModal';
+import DeleteConfirmationModal from '../components/admin/DeleteConfirmationModal';
+import RestockModal from '../components/admin/RestockModal';
+import { SearchFilters, PurchaseData, Sweet } from '../types/sweet';
 import { getErrorMessage } from '../utils/helpers';
 
 const DashboardPage: React.FC = () => {
@@ -16,10 +19,18 @@ const DashboardPage: React.FC = () => {
     searchSweets,
     purchaseSweet,
     fetchSweets,
+    updateSweet,
+    deleteSweet,
+    restockSweet,
   } = useSweets();
 
   const [searchError, setSearchError] = useState<string | null>(null);
   const [purchaseSuccess, setPurchaseSuccess] = useState<string | null>(null);
+  
+  // Modal states
+  const [editModalSweet, setEditModalSweet] = useState<Sweet | null>(null);
+  const [deleteModalSweet, setDeleteModalSweet] = useState<Sweet | null>(null);
+  const [restockModalSweet, setRestockModalSweet] = useState<Sweet | null>(null);
 
   const handleFiltersChange = async (filters: SearchFilters) => {
     try {
@@ -51,6 +62,36 @@ const DashboardPage: React.FC = () => {
     } catch (error: any) {
       throw new Error(getErrorMessage(error));
     }
+  };
+
+  const handleEdit = (sweet: Sweet) => {
+    setEditModalSweet(sweet);
+  };
+
+  const handleDelete = async (sweet: Sweet) => {
+    setDeleteModalSweet(sweet);
+  };
+
+  const handleRestock = async (sweet: Sweet) => {
+    setRestockModalSweet(sweet);
+  };
+
+  // Modal handlers
+  const handleEditSubmit = async (id: string, data: any) => {
+    await updateSweet(id, data);
+    setEditModalSweet(null);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (deleteModalSweet) {
+      await deleteSweet(deleteModalSweet.id);
+      setDeleteModalSweet(null);
+    }
+  };
+
+  const handleRestockSubmit = async (sweetId: string, quantity: number) => {
+    await restockSweet(sweetId, { quantity });
+    setRestockModalSweet(null);
   };
 
   return (
@@ -123,8 +164,38 @@ const DashboardPage: React.FC = () => {
           isLoading={isLoading}
           error={error || searchError}
           onPurchase={handlePurchase}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+          onRestock={handleRestock}
         />
       </div>
+
+      {/* Admin Modals */}
+      {editModalSweet && (
+        <EditSweetModal
+          sweet={editModalSweet}
+          categories={categories}
+          onEdit={handleEditSubmit}
+          onClose={() => setEditModalSweet(null)}
+        />
+      )}
+
+      {deleteModalSweet && (
+        <DeleteConfirmationModal
+          sweet={deleteModalSweet}
+          onDelete={handleDeleteConfirm}
+          onClose={() => setDeleteModalSweet(null)}
+        />
+      )}
+
+      {restockModalSweet && (
+        <RestockModal
+          sweet={restockModalSweet}
+          isOpen={true}
+          onClose={() => setRestockModalSweet(null)}
+          onRestock={handleRestockSubmit}
+        />
+      )}
     </div>
   );
 };
