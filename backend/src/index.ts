@@ -32,6 +32,21 @@ export const createApp = (): express.Application => {
     res.json({ status: 'OK', message: 'Sweet Shop API is running' });
   });
 
+  // Database connectivity test
+  app.get('/api/db-test', async (_req, res) => {
+    try {
+      await prisma.$queryRaw`SELECT 1`;
+      res.json({ status: 'OK', message: 'Database connected successfully' });
+    } catch (error) {
+      console.error('Database test failed:', error);
+      res.status(500).json({ 
+        status: 'ERROR', 
+        message: 'Database connection failed',
+        error: error instanceof Error ? error.message : 'Unknown error'
+      });
+    }
+  });
+
   // Error handling middleware
   app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
     console.error(err.stack);
