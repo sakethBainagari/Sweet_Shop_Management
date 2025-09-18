@@ -1,15 +1,14 @@
-import { PrismaClient } from '@prisma/client';
+// Set test environment to prevent server from starting
+process.env.NODE_ENV = 'test';
 
-const prisma = new PrismaClient();
+import { prisma } from '../index';
 
 beforeAll(async () => {
-  // Connect to database
-  await prisma.$connect();
+  // Database connection is handled by the imported prisma instance
 });
 
 afterAll(async () => {
-  // Disconnect from database
-  await prisma.$disconnect();
+  // Database disconnection is handled by the imported prisma instance
 });
 
 afterEach(async () => {
@@ -19,9 +18,9 @@ afterEach(async () => {
   >`SELECT tablename FROM pg_tables WHERE schemaname='public'`;
 
   const tables = tablenames
-    .map(({ tablename }) => tablename)
-    .filter((name) => name !== '_prisma_migrations')
-    .map((name) => `"public"."${name}"`)
+    .map(({ tablename }: { tablename: string }) => tablename)
+    .filter((name: string) => name !== '_prisma_migrations')
+    .map((name: string) => `"public"."${name}"`)
     .join(', ');
 
   try {
