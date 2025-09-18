@@ -1,37 +1,51 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import './App.css'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import { ToastProvider } from './context/ToastContext';
+import ProtectedRoute from './components/common/ProtectedRoute';
+import Header from './components/common/Header';
+import ToastContainer from './components/common/ToastContainer';
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import DashboardPage from './pages/DashboardPage';
+import './index.css';
 
 function App() {
   return (
-    <Router>
-      <div className="min-h-screen bg-gray-50">
-        <header className="bg-white shadow">
-          <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-            <h1 className="text-3xl font-bold text-gray-900">
-              Sweet Shop Management System
-            </h1>
+    <ToastProvider>
+      <AuthProvider>
+        <Router>
+          <div className="min-h-screen bg-gray-50">
+            <Header />
+            
+            <main className="container mx-auto px-4 py-6">
+              <Routes>
+                {/* Public Routes */}
+                <Route path="/" element={<HomePage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
+                
+                {/* Protected Routes */}
+                <Route 
+                  path="/dashboard" 
+                  element={
+                    <ProtectedRoute>
+                      <DashboardPage />
+                    </ProtectedRoute>
+                  } 
+                />
+                
+                {/* Redirect unknown routes to home */}
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+            </main>
+            
+            <ToastContainer />
           </div>
-        </header>
-
-        <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-          <div className="px-4 py-6 sm:px-0">
-            <Routes>
-              <Route path="/" element={
-                <div className="text-center">
-                  <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-                    Welcome to Sweet Shop Management
-                  </h2>
-                  <p className="text-gray-600">
-                    Your full-stack application is being set up. Phase 1 complete!
-                  </p>
-                </div>
-              } />
-            </Routes>
-          </div>
-        </main>
-      </div>
-    </Router>
-  )
+        </Router>
+      </AuthProvider>
+    </ToastProvider>
+  );
 }
 
-export default App
+export default App;
