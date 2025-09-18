@@ -1,12 +1,20 @@
 import { Request, Response } from 'express';
 
 export const createMockRequest = (overrides: Partial<Request> = {}): Partial<Request> => {
-  return {
+  const baseRequest: Partial<Request> = {
     body: {},
     params: {},
     query: {},
     headers: {},
-    user: undefined,
+  };
+  
+  // Only add user property if provided in overrides
+  if (overrides.user !== undefined) {
+    (baseRequest as any).user = overrides.user;
+  }
+  
+  return {
+    ...baseRequest,
     ...overrides
   };
 };
