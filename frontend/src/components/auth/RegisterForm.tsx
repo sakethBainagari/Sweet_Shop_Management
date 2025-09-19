@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { RegisterData } from '../../types/auth';
 import { isValidEmail, isValidPassword } from '../../utils/helpers';
 import { VALIDATION_RULES } from '../../utils/constants';
+import { SampleCredentials } from '../common/SampleCredentials';
 
 interface RegisterFormProps {
   onSubmit: (data: RegisterData) => Promise<void>;
@@ -380,6 +381,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit, isLoading, error 
             Your information is secure and encrypted
           </p>
         </div>
+
+        {/* Sample Credentials for Testing */}
+        <SampleCredentials className="mt-6" />
       </div>
     </div>
   );

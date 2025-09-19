@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { LoginData } from '../../types/auth';
 import { isValidEmail } from '../../utils/helpers';
+import { SampleCredentials } from '../common/SampleCredentials';
 
 interface LoginFormProps {
   onSubmit: (data: LoginData) => Promise<void>;
@@ -202,6 +203,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, isLoading, error }) => 
             </p>
           </div>
         </div>
+
+        {/* Sample Credentials for Testing */}
+        <SampleCredentials className="mt-6" />
       </div>
     </div>
   );
