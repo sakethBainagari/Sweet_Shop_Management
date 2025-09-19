@@ -40,7 +40,8 @@ export const createApp = (): express.Application => {
   // Database connectivity test
   app.get('/api/db-test', async (_req, res) => {
     try {
-      await prisma.$queryRaw`SELECT 1`;
+      // Test MongoDB connection by trying to find users (will work even if collection is empty)
+      await prisma.user.findMany({ take: 1 });
       res.json({ status: 'OK', message: 'Database connected successfully' });
     } catch (error) {
       console.error('Database test failed:', error);

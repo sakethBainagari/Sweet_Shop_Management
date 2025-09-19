@@ -6,12 +6,12 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id        String   @id @default(cuid())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   email     String   @unique
   password  String
   name      String
@@ -23,7 +23,7 @@ model User {
 }
 
 model Sweet {
-  id          String   @id @default(cuid())
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   category    String
   price       Float
@@ -36,9 +36,9 @@ model Sweet {
 }
 
 model Purchase {
-  id         String   @id @default(cuid())
-  userId     String
-  sweetId    String
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String   @db.ObjectId
+  sweetId    String   @db.ObjectId
   quantity   Int
   totalPrice Float
   createdAt  DateTime @default(now())
