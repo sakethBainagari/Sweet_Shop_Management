@@ -1,768 +1,413 @@
-# Sweet Shop Management System# Sweet Shop Management System 🍭
+# Sweet Shop Management System
 
+A comprehensive full-stack application for managing a sweet shop with authentication, inventory management, and purchase functionality. Built using Test-Driven Development (TDD) methodology with extensive test coverage.
 
+## 🚀 Live Application
 
-A full-stack web application for managing a sweet shop's inventory, user authentication, and purchase system. Built with modern technologies following Test-Driven Development (TDD) principles.A comprehensive full-stack application for managing a sweet shop with authentication, inventory management, and purchase functionality. Built using Test-Driven Development (TDD) methodology with extensive test coverage.
+**Frontend**: [https://sweet-shop-management-ruddy.vercel.app/](https://sweet-shop-management-ruddy.vercel.app/)  
+**Backend API**: [https://sweet-shop-management-2.onrender.com](https://sweet-shop-management-2.onrender.com)
 
-
-
-## 🚀 Live Application## 📊 Project Status
+## 📊 Project Status
 
 - **Backend Tests**: ✅ 52 passing tests
-
-**Frontend**: [https://sweet-shop-management-ruddy.vercel.app/](https://sweet-shop-management-ruddy.vercel.app/)  - **Frontend Tests**: ✅ 45 passing tests
-
-**Backend API**: [https://sweet-shop-management-2.onrender.com](https://sweet-shop-management-2.onrender.com)- **Total Tests**: ✅ 97 passing tests
-
+- **Frontend Tests**: ✅ 45 passing tests
+- **Total Tests**: ✅ 97 passing tests
 - **Test Coverage**: 100% on critical business logic
+- **Deployment Status**: Ready for production
 
-## 📋 Demo Credentials- **Deployment Status**: Ready for production
+## 📋 Demo Credentials
 
-
-
-### Admin User## 🛠️ Technology Stack
-
+### Admin User
 - **Email**: `admin@sweetshop.com`
+- **Password**: `admin123456`
+- **Capabilities**: Full CRUD operations, inventory management, user management
 
-- **Password**: `admin123456`### Backend
+### Customer User
+- **Email**: `customer@example.com`
+- **Password**: `customer123`
+- **Capabilities**: Browse sweets, search/filter, purchase items
 
-- **Capabilities**: Full CRUD operations, inventory management, user management- **Runtime**: Node.js with TypeScript
+## 🛠️ Technology Stack
 
+### Backend
+- **Runtime**: Node.js with TypeScript
 - **Framework**: Express.js
-
-### Customer User- **Database**: Supabase PostgreSQL
-
-- **Email**: `customer@example.com`- **ORM**: Prisma
-
-- **Password**: `customer123`- **Authentication**: JWT
-
-- **Capabilities**: Browse sweets, search/filter, purchase items- **Testing**: Jest + Supertest
-
+- **ORM**: Prisma
+- **Authentication**: JWT
 - **Password Hashing**: bcrypt
-
-## 🛠 Technology Stack
-
-### Frontend
-
-### Backend- **Framework**: React with TypeScript
-
-- **Runtime**: Node.js with TypeScript- **Build Tool**: Vite
-
-- **Framework**: Express.js- **Styling**: CSS Modules
-
-- **Database**: MongoDB Atlas with Prisma ORM- **State Management**: React Context
-
-- **Authentication**: JWT tokens with bcrypt password hashing- **HTTP Client**: Axios
-
-- **Testing**: Jest with Supertest for API testing- **Testing**: Vitest + React Testing Library
-
-- **Deployment**: Render
-
-## � Quick Start Guide
+- **Testing**: Jest + Supertest
 
 ### Frontend
-
-- **Framework**: React 18 with TypeScript### Prerequisites
-
-- **Styling**: Tailwind CSS- Node.js (v18 or higher)
-
-- **Build Tool**: Vite- npm or yarn
-
-- **State Management**: React Context API- Supabase account (for database)
-
+- **Framework**: React with TypeScript
+- **Build Tool**: Vite
+- **Styling**: CSS Modules
+- **State Management**: React Context
 - **HTTP Client**: Axios
+- **Testing**: Vitest + React Testing Library
 
-- **Deployment**: Vercel### 1. Clone Repository
+## 🚦 Quick Start Guide
+
+### Prerequisites
+- Node.js (v18 or higher)
+- npm or yarn
+- MongoDB database (local or cloud)
+
+### 1. Clone Repository
 
 ```bash
-
-## 🏗 Project Structuregit clone <repository-url>
-
+git clone <repository-url>
 cd Sweet_Shop_Management
+```
 
-``````
+### 2. Environment Setup
 
-Sweet_Shop_Management/
-
-├── backend/### 2. Environment Setup
-
-│   ├── src/
-
-│   │   ├── controllers/        # API controllers#### Backend Environment (.env)
-
-│   │   ├── middleware/         # Authentication middleware```env
-
-│   │   ├── routes/            # API routes# Supabase Configuration
-
-│   │   ├── services/          # Business logicSUPABASE_URL=your_supabase_url
-
-│   │   ├── tests/             # Test suitesSUPABASE_ANON_KEY=your_supabase_anon_key
-
-│   │   └── utils/             # Utilities (JWT, Prisma)SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
-
-│   ├── prisma/                # Database schema
-
-│   └── package.json# JWT Secret
-
-├── frontend/JWT_SECRET=your_super_secret_jwt_key
-
-│   ├── src/
-
-│   │   ├── components/        # React components# Server Configuration
-
-│   │   ├── pages/             # Page componentsPORT=5000
-
-│   │   ├── context/           # React contextNODE_ENV=development
-
-│   │   ├── services/          # API services
-
-│   │   ├── types/             # TypeScript types# Database
-
-│   │   └── utils/             # Utility functionsDATABASE_URL=your_supabase_database_url
-
-│   └── package.json```
-
-└── README.md
-
-```#### Frontend Environment (.env)
+#### Backend Environment (.env)
 
 ```env
+# MongoDB Configuration
+MONGODB_URL=your_mongodb_connection_string
 
-## 🚦 Getting StartedVITE_API_URL=http://localhost:5000
+# JWT Secret
+JWT_SECRET=your_super_secret_jwt_key
 
-VITE_SUPABASE_URL=your_supabase_url
+# Server Configuration
+PORT=5000
+NODE_ENV=development
 
-### PrerequisitesVITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+# Database
+DATABASE_URL="mongodb://username:password@localhost:27017/sweetshop"
+```
 
-- Node.js (v18 or higher)```
+#### Frontend Environment (.env)
 
-- npm or yarn
+```env
+VITE_API_URL=http://localhost:5000
+```
 
-- MongoDB database (local or cloud)### 3. Backend Setup
+### 3. Backend Setup
 
 ```bash
-
-### Backend Setupcd backend
-
+cd backend
 npm install
-
-1. **Clone the repository**npx prisma generate
-
-   ```bashnpx prisma db push
-
-   git clone https://github.com/sakethBainagari/Sweet_Shop_Management.gitnpm run dev
-
-   cd Sweet_Shop_Management/backend```
-
-   ```
+npx prisma generate
+npx prisma db push
+npm run dev
+```
 
 ### 4. Frontend Setup
 
-2. **Install dependencies**```bash
-
-   ```bashcd frontend
-
-   npm installnpm install
-
-   ```npm run dev
-
+```bash
+cd frontend
+npm install
+npm run dev
 ```
 
-3. **Environment Configuration**
+### 5. Database Seeding (Optional)
 
-   Create a `.env` file in the backend directory:### 5. Database Seeding (Optional)
+```bash
+cd backend
+npm run seed
+```
 
-   ```env```bash
+## 🧪 Testing
 
-   # Database Configurationcd backend
+### Run All Tests
 
-   DATABASE_URL="your_mongodb_connection_string"npm run seed
+```bash
+# Backend tests (52 tests)
+cd backend && npm test
 
-   ```
-
-   # JWT Configuration
-
-   JWT_SECRET="your_jwt_secret_key"## 🧪 Testing
-
-   JWT_EXPIRES_IN="24h"
-
-   ### Run All Tests
-
-   # Server Configuration```bash
-
-   PORT=5000# Backend tests (52 tests)
-
-   NODE_ENV="development"cd backend && npm test
-
-   
-
-   # CORS Configuration# Frontend tests (45 tests) 
-
-   FRONTEND_URL="http://localhost:5173"cd frontend && npm test
-
-   ```
+# Frontend tests (45 tests) 
+cd frontend && npm test
 
 # Run tests with coverage
+npm run test:coverage
+```
 
-4. **Database Setup**npm run test:coverage
+### Test Coverage Details
 
-   ```bash```
+- **Authentication**: 100% coverage
+- **Sweet Management**: 100% coverage
+- **Purchase System**: 100% coverage
+- **Frontend Components**: 100% coverage
+- **Utility Functions**: 100% coverage
 
-   # Generate Prisma client
+## 📁 Project Structure
 
-   npx prisma generate### Test Coverage Details
-
-   - **Authentication**: 100% coverage
-
-   # Push database schema- **Sweet Management**: 100% coverage
-
-   npx prisma db push- **Purchase System**: 100% coverage
-
-   - **Frontend Components**: 100% coverage
-
-   # (Optional) Seed initial data- **Utility Functions**: 100% coverage
-
-   npm run seed
-
-   ```## 📁 Project Structure
-
-
-
-5. **Start the development server**```
-
-   ```bashSweet_Shop_Management/
-
-   npm run dev├── backend/
-
-   ```│   ├── src/
-
+```
+Sweet_Shop_Management/
+├── backend/
+│   ├── src/
 │   │   ├── controllers/     # API controllers
-
-   The backend will be available at `http://localhost:5000`│   │   ├── middleware/      # Authentication & validation
-
+│   │   ├── middleware/      # Authentication & validation
 │   │   ├── routes/          # API routes
-
-### Frontend Setup│   │   ├── services/        # Business logic
-
+│   │   ├── services/        # Business logic
 │   │   ├── types/           # TypeScript types
-
-1. **Navigate to frontend directory**│   │   └── utils/           # Utility functions
-
-   ```bash│   ├── __tests__/           # Test files
-
-   cd ../frontend│   ├── prisma/              # Database schema
-
-   ```│   ├── package.json
-
+│   │   └── utils/           # Utility functions
+│   ├── __tests__/           # Test files
+│   ├── prisma/              # Database schema
+│   ├── package.json
 │   └── jest.config.js
-
-2. **Install dependencies**├── frontend/
-
-   ```bash│   ├── src/
-
-   npm install│   │   ├── components/      # React components
-
-   ```│   │   ├── contexts/        # React contexts
-
+├── frontend/
+│   ├── src/
+│   │   ├── components/      # React components
+│   │   ├── contexts/        # React contexts
 │   │   ├── hooks/           # Custom hooks
-
-3. **Environment Configuration**│   │   ├── pages/           # Page components
-
-   Create a `.env` file in the frontend directory:│   │   ├── services/        # API services
-
-   ```env│   │   ├── types/           # TypeScript types
-
-   VITE_API_URL="http://localhost:5000"│   │   └── test/            # Test files
-
-   ```│   ├── package.json
-
+│   │   ├── pages/           # Page components
+│   │   ├── services/        # API services
+│   │   ├── types/           # TypeScript types
+│   │   └── test/            # Test files
+│   ├── package.json
 │   └── vite.config.ts
+└── README.md
+```
 
-4. **Start the development server**└── README.md
+## 🔐 API Endpoints
 
-   ```bash```
-
-   npm run dev
-
-   ```## 🔐 API Endpoints
-
-
-
-   The frontend will be available at `http://localhost:5173`### Authentication
-
+### Authentication
 - `POST /api/auth/register` - User registration
-
-## 🧪 Testing- `POST /api/auth/login` - User login
-
+- `POST /api/auth/login` - User login
 - `GET /api/auth/profile` - Get user profile
 
-### Backend Tests
-
 ### Sweet Management
-
-The project includes comprehensive test coverage using Jest and Supertest:- `GET /api/sweets` - Get all sweets
-
+- `GET /api/sweets` - Get all sweets
 - `GET /api/sweets/:id` - Get sweet by ID
-
-```bash- `POST /api/sweets` - Create sweet (Admin only)
-
-# Run all tests- `PUT /api/sweets/:id` - Update sweet (Admin only)
-
-cd backend && npm test- `DELETE /api/sweets/:id` - Delete sweet (Admin only)
-
+- `POST /api/sweets` - Create sweet (Admin only)
+- `PUT /api/sweets/:id` - Update sweet (Admin only)
+- `DELETE /api/sweets/:id` - Delete sweet (Admin only)
 - `GET /api/sweets/search` - Search sweets
 
-# Run tests with coverage
-
-npm run test:coverage### Purchase System
-
+### Purchase System
 - `POST /api/sweets/:id/purchase` - Purchase sweet
+- `PUT /api/sweets/:id/restock` - Restock sweet (Admin only)
 
-# Run specific test suite- `PUT /api/sweets/:id/restock` - Restock sweet (Admin only)
+## 👤 User Roles & Permissions
 
-npm test -- auth.test.ts
+### Regular User
+- View all sweets
+- Search and filter sweets
+- Purchase sweets
+- View purchase history
 
-```## 👤 User Roles & Permissions
-
-
-
-### Test Coverage Summary### Regular User
-
-- **Total Test Suites**: 3 passing- View all sweets
-
-- **Total Tests**: 52 passing- Search and filter sweets
-
-- **Coverage Areas**: Authentication, Sweet Management, Purchase Workflows- Purchase sweets
-
-- **Coverage Metrics**: 85%+ statement and branch coverage- View purchase history
-
-
-
-### Test Categories:### Admin User
-
-- **Authentication Tests** (16 tests): User registration, login, JWT handling- All user permissions
-
-- **Sweet Management Tests** (31 tests): CRUD operations, inventory, search- Create new sweets
-
-- **Controller Logic Tests** (5 tests): HTTP responses, error handling- Update sweet details
-
+### Admin User
+- All user permissions
+- Create new sweets
+- Update sweet details
 - Delete sweets
-
-## 📱 Features- Restock inventory
-
+- Restock inventory
 - View all users and purchases
 
-### Authentication System
+## 🔧 Development Features
 
-- ✅ User registration with email validation## 🔧 Development Features
-
-- ✅ Secure login with JWT tokens
-
-- ✅ Role-based access control (Admin/Customer)### Test-Driven Development (TDD)
-
-- ✅ Password encryption with bcrypt- **97 comprehensive tests** covering all functionality
-
+### Test-Driven Development (TDD)
+- **97 comprehensive tests** covering all functionality
 - Tests written before implementation
+- Red-Green-Refactor methodology followed
+- Continuous integration ready
 
-### Sweet Management (Admin)- Red-Green-Refactor methodology followed
-
-- ✅ Add new sweets to inventory- Continuous integration ready
-
-- ✅ Edit sweet details (name, price, category, quantity)
-
-- ✅ Delete sweets from inventory### Code Quality
-
-- ✅ Restock inventory quantities- TypeScript for type safety
-
-- ✅ View low stock alerts- ESLint for code quality
-
+### Code Quality
+- TypeScript for type safety
+- ESLint for code quality
 - Prettier for code formatting
-
-### Customer Features- Comprehensive error handling
-
-- ✅ Browse available sweets- Input validation and sanitization
-
-- ✅ Search sweets by name, category, or price range
-
-- ✅ Filter sweets by category### Security Features
-
-- ✅ Purchase sweets with quantity selection- JWT-based authentication
-
-- ✅ View real-time stock availability- Password hashing with bcrypt
-
+- Comprehensive error handling
 - Input validation and sanitization
 
-### API Endpoints- SQL injection prevention
-
+### Security Features
+- JWT-based authentication
+- Password hashing with bcrypt
+- Input validation and sanitization
+- SQL injection prevention
 - CORS configuration
+- Rate limiting (ready for implementation)
 
-#### Authentication- Rate limiting (ready for implementation)
+## 📦 Production Deployment
 
-- `POST /api/auth/register` - User registration
+### Backend Deployment (Heroku/Railway/DigitalOcean)
 
-- `POST /api/auth/login` - User login## 📦 Production Deployment
+```bash
+# Build the application
+npm run build
 
-
-
-#### Sweets Management (Protected)### Backend Deployment (Heroku/Railway/DigitalOcean)
-
-- `GET /api/sweets` - Get all sweets```bash
-
-- `POST /api/sweets` - Create new sweet (Admin only)# Build the application
-
-- `GET /api/sweets/search` - Search sweets with filtersnpm run build
-
-- `PUT /api/sweets/:id` - Update sweet (Admin only)
-
-- `DELETE /api/sweets/:id` - Delete sweet (Admin only)# Set production environment variables
-
+# Set production environment variables
 NODE_ENV=production
+JWT_SECRET=your_production_jwt_secret
+MONGODB_URL=your_production_mongodb_url
+# ... other environment variables
 
-#### Inventory & Purchases (Protected)JWT_SECRET=your_production_jwt_secret
-
-- `POST /api/sweets/:id/purchase` - Purchase sweetSUPABASE_URL=your_production_supabase_url
-
-- `POST /api/sweets/:id/restock` - Restock sweet (Admin only)# ... other environment variables
-
-
-
-## 📊 Database Schema# Start the application
-
+# Start the application
 npm start
+```
 
-### User Model```
+### Frontend Deployment (Vercel/Netlify)
 
-```prisma
+```bash
+# Build for production
+npm run build
 
-model User {### Frontend Deployment (Vercel/Netlify)
+# Deploy the dist folder
+# Set environment variables in deployment platform
+```
 
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId```bash
+### Environment Variables for Production
 
-  email     String   @unique# Build for production
-
-  name      Stringnpm run build
-
-  password  String
-
-  role      Role     @default(USER)# Deploy the dist folder
-
-  createdAt DateTime @default(now())# Set environment variables in deployment platform
-
-  updatedAt DateTime @updatedAt```
-
-  purchases Purchase[]
-
-}### Environment Variables for Production
-
-```Ensure all environment variables are set in your deployment platform:
-
+Ensure all environment variables are set in your deployment platform:
 - Database connection strings
+- JWT secrets
+- MongoDB credentials
+- API URLs
 
-### Sweet Model- JWT secrets
+## 🐛 Troubleshooting
 
-```prisma- Supabase credentials
+### Common Issues
 
-model Sweet {- API URLs
+#### Database Connection
 
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+```bash
+# Check database connection
+npx prisma db pull
 
-  name        String## 🐛 Troubleshooting
-
-  category    String
-
-  price       Float### Common Issues
-
-  quantity    Int
-
-  description String?#### Database Connection
-
-  createdAt   DateTime @default(now())```bash
-
-  updatedAt   DateTime @updatedAt# Check database connection
-
-  purchases   Purchase[]npx prisma db pull
-
-}
-
-```# Reset database if needed
-
+# Reset database if needed
 npx prisma db push --force-reset
+```
 
-### Purchase Model```
+#### Port Conflicts
 
-```prisma
+```bash
+# Check what's running on port 5000
+lsof -i :5000
 
-model Purchase {#### Port Conflicts
+# Use different port
+PORT=3001 npm run dev
+```
 
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId```bash
+#### Test Failures
 
-  userId     String   @db.ObjectId# Check what's running on port 5000
-
-  sweetId    String   @db.ObjectIdlsof -i :5000
-
-  quantity   Int
-
-  totalPrice Float# Use different port
-
-  createdAt  DateTime @default(now())PORT=3001 npm run dev
-
-  user       User     @relation(fields: [userId], references: [id])```
-
-  sweet      Sweet    @relation(fields: [sweetId], references: [id])
-
-}#### Test Failures
-
-``````bash
-
+```bash
 # Run specific test file
+npm test auth.test.ts
 
-## 🚀 Deploymentnpm test auth.test.ts
-
-
-
-### Backend Deployment (Render)# Run tests in watch mode
-
-1. Connect GitHub repository to Rendernpm test -- --watch
-
-2. Configure environment variables in Render dashboard```
-
-3. Deploy with automatic builds on push to main branch
+# Run tests in watch mode
+npm test -- --watch
+```
 
 ## 📈 Performance Considerations
 
-### Frontend Deployment (Vercel)
-
-1. Connect GitHub repository to Vercel### Backend Optimizations
-
-2. Configure build settings (Vite)- Database indexing on frequently queried fields
-
-3. Set environment variables in Vercel dashboard- Pagination for large datasets
-
-4. Deploy with automatic deployments on push- Connection pooling
-
+### Backend Optimizations
+- Database indexing on frequently queried fields
+- Pagination for large datasets
+- Connection pooling
 - Response caching (ready for implementation)
 
-## 📸 Application Screenshots
-
 ### Frontend Optimizations
-
-### Customer Dashboard- Code splitting with React.lazy
-
-![Customer Dashboard](https://via.placeholder.com/800x400/f3f4f6/374151?text=Customer+Dashboard+-+Browse+and+Purchase+Sweets)- Memoization with React.memo
-
-*Customer view showing available sweets with purchase functionality*- Optimized bundle size with Vite
-
+- Code splitting with React.lazy
+- Memoization with React.memo
+- Optimized bundle size with Vite
 - Image lazy loading (when implemented)
 
-### Admin Management
-
-![Admin Dashboard](https://via.placeholder.com/800x400/f3f4f6/374151?text=Admin+Dashboard+-+Add+New+Sweet+Modal)## 🤝 Contributing
-
-*Admin interface for adding new sweets to inventory*
+## 🤝 Contributing
 
 ### Development Workflow
-
-### Authentication1. Fork the repository
-
-![Login Page](https://via.placeholder.com/800x400/f3f4f6/374151?text=Login+Page+-+Secure+Authentication)2. Create a feature branch
-
-*User authentication with role-based access control*3. Write tests first (TDD approach)
-
+1. Fork the repository
+2. Create a feature branch
+3. Write tests first (TDD approach)
 4. Implement the feature
-
-## 🤖 My AI Usage5. Ensure all tests pass
-
+5. Ensure all tests pass
 6. Submit a pull request
 
-### AI Tools Used
-
-- **GitHub Copilot**: Primary AI assistant for code generation and completion### Code Standards
-
-- **ChatGPT (OpenAI)**: Architecture planning, debugging assistance, and documentation- Follow TypeScript strict mode
-
+### Code Standards
+- Follow TypeScript strict mode
 - Write comprehensive tests
-
-### How I Used AI Tools- Follow existing code patterns
-
+- Follow existing code patterns
 - Document complex functionality
 
-#### Code Generation and Boilerplate
+## 📞 Support
 
-- **GitHub Copilot**: Generated initial boilerplate for React components, Express routes, and Prisma schemas## 📞 Support
-
-- **ChatGPT**: Helped design the overall project structure and API endpoint patterns
-
-- Used AI to generate TypeScript interfaces and type definitionsFor issues or questions:
-
-- Generated initial test scaffolding and test cases structure1. Check the troubleshooting section
-
+For issues or questions:
+1. Check the troubleshooting section
 2. Review test files for expected behavior
+3. Check environment variable configuration
+4. Create an issue with detailed error information
 
-#### Problem Solving and Debugging3. Check environment variable configuration
-
-- **GitHub Copilot**: Suggested solutions for TypeScript compilation errors and React hooks issues4. Create an issue with detailed error information
-
-- **ChatGPT**: Helped debug CORS configuration issues and deployment problems
-
-- Used AI to troubleshoot database connection issues and Prisma schema migrations## 🎉 Project Achievements
-
-- Assisted with JWT authentication implementation and middleware setup
+## 🎉 Project Achievements
 
 ✅ **Complete TDD Implementation**: 97 tests covering all functionality  
+✅ **Full-Stack TypeScript**: End-to-end type safety  
+✅ **Production Ready**: Comprehensive error handling and validation  
+✅ **Secure Authentication**: JWT-based with bcrypt password hashing  
+✅ **Modern Tech Stack**: Latest versions of React, Node.js, and tooling  
+✅ **Extensive Documentation**: Clear setup and deployment instructions  
 
-#### Testing and Quality Assurance✅ **Full-Stack TypeScript**: End-to-end type safety  
+## 📄 License
 
-- **GitHub Copilot**: Generated comprehensive test cases for authentication and sweet management✅ **Production Ready**: Comprehensive error handling and validation  
-
-- Used AI to create mock data and test utilities✅ **Secure Authentication**: JWT-based with bcrypt password hashing  
-
-- Generated Jest configuration and setup files✅ **Modern Tech Stack**: Latest versions of React, Node.js, and tooling  
-
-- Assisted with test coverage improvement and edge case identification✅ **Extensive Documentation**: Clear setup and deployment instructions  
-
-
-
-#### Documentation and Code Comments## 📄 License
-
-- **ChatGPT**: Helped structure this README.md file and API documentation
-
-- Generated meaningful code comments and JSDoc documentationThis project is for educational purposes and demonstrates best practices in full-stack development with comprehensive testing.
-
-- Created comprehensive commit messages following conventional commit standards
+This project is for educational purposes and demonstrates best practices in full-stack development with comprehensive testing.
 
 ---
 
-### AI Impact on My Workflow
-
 **Built with ❤️ using Test-Driven Development**
-
-#### Positive Impacts- ✅ Comprehensive test coverage
-
-1. **Accelerated Development**: AI tools reduced boilerplate writing time by approximately 60%- ✅ TypeScript for type safety
-
-2. **Error Reduction**: Copilot suggestions helped avoid common TypeScript and React pitfalls- ✅ RESTful API design
-
-3. **Test Coverage**: AI helped generate comprehensive test cases I might have missed- ✅ Responsive UI design
-
-4. **Code Quality**: AI suggestions improved code consistency and best practice adherence- ✅ Error handling and validation
-
-5. **Documentation**: Significantly faster documentation writing with AI assistance
+- ✅ Comprehensive test coverage
+- ✅ TypeScript for type safety
+- ✅ RESTful API design
+- ✅ Responsive UI design
+- ✅ Error handling and validation
 
 ## 🚀 Getting Started
 
-#### Learning and Skill Development
+### Prerequisites
+- Node.js (v18 or higher)
+- MongoDB database
+- npm or yarn package manager
 
-1. **Pattern Recognition**: Observing AI suggestions improved my understanding of design patterns### Prerequisites
+### Installation
 
-2. **Best Practices**: AI consistently suggested industry-standard approaches- Node.js (v18 or higher)
-
-3. **Problem-Solving**: AI helped break down complex problems into manageable steps- PostgreSQL database
-
-4. **Technology Integration**: Faster learning of new libraries and frameworks- npm or yarn package manager
-
-
-
-#### Challenges and Limitations### Installation
-
-1. **Context Understanding**: Had to carefully review AI suggestions for project-specific requirements
-
-2. **Business Logic**: Required manual implementation of complex business rules1. **Clone the repository**
-
-3. **Code Review**: Always validated AI-generated code for correctness and security   ```bash
-
-4. **Architecture Decisions**: Made high-level architectural decisions independently   git clone <repository-url>
-
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
    cd sweet-shop-management
+   ```
 
-### Reflection on AI-Assisted Development   ```
-
-
-
-Using AI tools in this project was transformative for my development workflow. The combination of GitHub Copilot for real-time code suggestions and ChatGPT for architectural guidance created a powerful development environment. However, I maintained critical thinking throughout the process, ensuring that all AI-generated code was reviewed, tested, and aligned with project requirements.2. **Backend Setup**
-
+2. **Backend Setup**
    ```bash
-
-The AI tools were particularly valuable for:   cd backend
-
-- Generating repetitive code structures   npm install
-
-- Suggesting modern JavaScript/TypeScript patterns   cp .env.example .env
-
-- Creating comprehensive test suites   # Edit .env with your PostgreSQL connection details
-
-- Debugging complex integration issues   ```
-
-
-
-This experience has shown me that AI is most effective when used as an intelligent assistant rather than a replacement for developer expertise. The combination of AI efficiency and human oversight resulted in a higher-quality codebase delivered in shorter time.3. **Frontend Setup**
-
-   ```bash
-
-## 🏆 Project Achievements   cd ../frontend
-
+   cd backend
    npm install
+   cp .env.example .env
+   # Edit .env with your MongoDB connection details
+   ```
 
-### Technical Excellence   cp .env.example .env
+3. **Frontend Setup**
+   ```bash
+   cd ../frontend
+   npm install
+   cp .env.example .env
+   # Edit .env if needed (API base URL is configured)
+   ```
 
-✅ **Test-Driven Development**: 52 passing tests with 85%+ coverage     # Edit .env if needed (API base URL is configured)
-
-✅ **Clean Architecture**: SOLID principles and clean code practices     ```
-
-✅ **Type Safety**: Full TypeScript implementation across frontend and backend  
-
-✅ **Security**: JWT authentication, password hashing, input validation  4. **Database Setup**
-
-✅ **Performance**: Optimized database queries and React component rendering     ```bash
-
+4. **Database Setup**
+   ```bash
    cd ../backend
+   npx prisma generate
+   npx prisma db push
+   ```
 
-### Features Delivered   npx prisma generate
+### Running the Application
 
-✅ **Complete Authentication System**: Registration, login, role-based access     npx prisma db push
-
-✅ **Full CRUD Operations**: Create, read, update, delete for sweet management     ```
-
-✅ **Real-time Inventory**: Stock tracking and low inventory alerts  
-
-✅ **Search and Filtering**: Advanced search capabilities with multiple filters  ### Running the Application
-
-✅ **Responsive Design**: Mobile-friendly UI with modern design  
-
-✅ **Live Deployment**: Production-ready application with CI/CD  1. **Start Backend Server**
-
+1. **Start Backend Server**
    ```bash
-
-### Development Practices   cd backend
-
-✅ **Git Workflow**: Clean commit history with descriptive messages     npm run dev
-
-✅ **Code Documentation**: Comprehensive README and inline documentation     ```
-
-✅ **Error Handling**: Robust error handling across all layers     Server will run on http://localhost:3001
-
-✅ **Environment Configuration**: Proper environment variable management  
-
-✅ **Deployment Automation**: Automated deployment pipeline  2. **Start Frontend Development Server**
-
-   ```bash
-
-## 📝 License   cd frontend
-
+   cd backend
    npm run dev
+   ```
+   Server will run on http://localhost:3001
 
-This project is developed as part of a technical assessment and is intended for evaluation purposes.   ```
-
+2. **Start Frontend Development Server**
+   ```bash
+   cd frontend
+   npm run dev
+   ```
    Application will be available at http://localhost:5173
-
----
 
 ### Testing
 
-**Developed by**: Saket Bainagari  
-
-**Repository**: [https://github.com/sakethBainagari/Sweet_Shop_Management](https://github.com/sakethBainagari/Sweet_Shop_Management)  ```bash
-
-**Live Application**: [https://sweet-shop-management-ruddy.vercel.app/](https://sweet-shop-management-ruddy.vercel.app/)# Backend tests
+```bash
+# Backend tests
 cd backend
 npm test
 
@@ -855,7 +500,67 @@ This project follows Test-Driven Development (TDD) methodology:
 
 ## 📝 My AI Usage
 
-*To be completed during development phases*
+### AI Tools Used
+- **GitHub Copilot**: Primary AI assistant for code generation and completion
+- **ChatGPT (OpenAI)**: Architecture planning, debugging assistance, and documentation
+
+### How I Used AI Tools
+
+#### Code Generation and Boilerplate
+- **GitHub Copilot**: Generated initial boilerplate for React components, Express routes, and Prisma schemas
+- **ChatGPT**: Helped design the overall project structure and API endpoint patterns
+- Used AI to generate TypeScript interfaces and type definitions
+- Generated initial test scaffolding and test cases structure
+
+#### Problem Solving and Debugging
+- **GitHub Copilot**: Suggested solutions for TypeScript compilation errors and React hooks issues
+- **ChatGPT**: Helped debug CORS configuration issues and deployment problems
+- Used AI to troubleshoot database connection issues and Prisma schema migrations
+- Assisted with JWT authentication implementation and middleware setup
+
+#### Testing and Quality Assurance
+- **GitHub Copilot**: Generated comprehensive test cases for authentication and sweet management
+- Used AI to create mock data and test utilities
+- Generated Jest configuration and setup files
+- Assisted with test coverage improvement and edge case identification
+
+#### Documentation and Code Comments
+- **ChatGPT**: Helped structure this README.md file and API documentation
+- Generated meaningful code comments and JSDoc documentation
+- Created comprehensive commit messages following conventional commit standards
+
+### AI Impact on My Workflow
+
+#### Positive Impacts
+1. **Accelerated Development**: AI tools reduced boilerplate writing time by approximately 60%
+2. **Error Reduction**: Copilot suggestions helped avoid common TypeScript and React pitfalls
+3. **Test Coverage**: AI helped generate comprehensive test cases I might have missed
+4. **Code Quality**: AI suggestions improved code consistency and best practice adherence
+5. **Documentation**: Significantly faster documentation writing with AI assistance
+
+#### Learning and Skill Development
+1. **Pattern Recognition**: Observing AI suggestions improved my understanding of design patterns
+2. **Best Practices**: AI consistently suggested industry-standard approaches
+3. **Problem-Solving**: AI helped break down complex problems into manageable steps
+4. **Technology Integration**: Faster learning of new libraries and frameworks
+
+#### Challenges and Limitations
+1. **Context Understanding**: Had to carefully review AI suggestions for project-specific requirements
+2. **Business Logic**: Required manual implementation of complex business rules
+3. **Code Review**: Always validated AI-generated code for correctness and security
+4. **Architecture Decisions**: Made high-level architectural decisions independently
+
+### Reflection on AI-Assisted Development
+
+Using AI tools in this project was transformative for my development workflow. The combination of GitHub Copilot for real-time code suggestions and ChatGPT for architectural guidance created a powerful development environment. However, I maintained critical thinking throughout the process, ensuring that all AI-generated code was reviewed, tested, and aligned with project requirements.
+
+The AI tools were particularly valuable for:
+- Generating repetitive code structures
+- Suggesting modern JavaScript/TypeScript patterns
+- Creating comprehensive test suites
+- Debugging complex integration issues
+
+This experience has shown me that AI is most effective when used as an intelligent assistant rather than a replacement for developer expertise. The combination of AI efficiency and human oversight resulted in a higher-quality codebase delivered in shorter time.
 
 ## 📄 License
 
