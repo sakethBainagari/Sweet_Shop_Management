@@ -6,6 +6,7 @@ import SweetList from '../components/sweets/SweetList';
 import EditSweetModal from '../components/admin/EditSweetModal';
 import DeleteConfirmationModal from '../components/admin/DeleteConfirmationModal';
 import RestockModal from '../components/admin/RestockModal';
+import SweetForm from '../components/admin/SweetForm';
 import { SearchFilters, PurchaseData, Sweet } from '../types/sweet';
 import { getErrorMessage } from '../utils/helpers';
 
@@ -19,6 +20,7 @@ const DashboardPage: React.FC = () => {
     searchSweets,
     purchaseSweet,
     fetchSweets,
+    createSweet,
     updateSweet,
     deleteSweet,
     restockSweet,
@@ -31,6 +33,7 @@ const DashboardPage: React.FC = () => {
   const [editModalSweet, setEditModalSweet] = useState<Sweet | null>(null);
   const [deleteModalSweet, setDeleteModalSweet] = useState<Sweet | null>(null);
   const [restockModalSweet, setRestockModalSweet] = useState<Sweet | null>(null);
+  const [showAddSweetModal, setShowAddSweetModal] = useState<boolean>(false);
 
   const handleFiltersChange = async (filters: SearchFilters) => {
     try {
@@ -94,6 +97,11 @@ const DashboardPage: React.FC = () => {
     setRestockModalSweet(null);
   };
 
+  const handleAddSweetSubmit = async (data: any) => {
+    await createSweet(data);
+    setShowAddSweetModal(false);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-neutral-50 to-primary-50">
       {/* Page Header */}
@@ -111,12 +119,12 @@ const DashboardPage: React.FC = () => {
             
             {user?.role === 'ADMIN' && (
               <div>
-                <a
-                  href="/admin"
+                <button
+                  onClick={() => setShowAddSweetModal(true)}
                   className="btn-primary"
                 >
-                  Admin Panel
-                </a>
+                  Add New Sweet
+                </button>
               </div>
             )}
           </div>
@@ -195,6 +203,32 @@ const DashboardPage: React.FC = () => {
           onClose={() => setRestockModalSweet(null)}
           onRestock={handleRestockSubmit}
         />
+      )}
+
+      {/* Add Sweet Modal */}
+      {showAddSweetModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-screen overflow-y-auto">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold text-gray-900">Add New Sweet</h2>
+              <button
+                onClick={() => setShowAddSweetModal(false)}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <SweetForm
+              categories={categories}
+              onSubmit={handleAddSweetSubmit}
+              onCancel={() => setShowAddSweetModal(false)}
+              isLoading={false}
+              error=""
+            />
+          </div>
+        </div>
       )}
     </div>
   );
