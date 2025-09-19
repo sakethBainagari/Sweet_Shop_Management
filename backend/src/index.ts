@@ -22,6 +22,7 @@ export const createApp = (): express.Application => {
       'https://sweet-shop-management-saketh.vercel.app',
       'https://sweet-shop-management-saketh-sakeths-projects-9e9dcc73.vercel.app',
       'https://sweet-shop-management-saketh-8a8ezeod9.vercel.app',
+      'https://sweet-shop-management-ruddy.vercel.app',
       'http://localhost:5173'
     ],
     credentials: true
